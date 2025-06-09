@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.controller;
 
 import com.mybookscollection.BooksManager.dto.BookDto;
 import com.mybookscollection.BooksManager.service.BookService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<BookDto> createBook(@RequestBody BookDto bookDto)
+    public ResponseEntity<BookDto> createBook(@RequestBody @Valid BookDto bookDto)
     {
         BookDto savedBook = bookService.createBook(bookDto);
 
@@ -41,7 +42,7 @@ public class BookController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId, @RequestBody BookDto bookDto)
+    public ResponseEntity<BookDto> updateBook(@PathVariable("id") Long bookId, @RequestBody @Valid BookDto bookDto)
     {
         BookDto updatedBook = bookService.updateBook(bookId, bookDto);
 

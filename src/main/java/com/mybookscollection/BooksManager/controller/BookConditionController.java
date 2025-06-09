@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.controller;
 
 import com.mybookscollection.BooksManager.dto.BookConditionDto;
 import com.mybookscollection.BooksManager.service.BookConditionService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class BookConditionController {
     private BookConditionService bookConditionService;
 
     @PostMapping
-    public ResponseEntity<BookConditionDto> createBookCondition(@RequestBody BookConditionDto bookConditionDto)
+    public ResponseEntity<BookConditionDto> createBookCondition(@RequestBody @Valid BookConditionDto bookConditionDto)
     {
         BookConditionDto savedBookCondition = bookConditionService.createBookCondition(bookConditionDto);
 
@@ -42,7 +43,7 @@ public class BookConditionController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookConditionDto> updateBookCondition(@PathVariable("id") Long bookConditionId, @RequestBody BookConditionDto bookConditionDto)
+    public ResponseEntity<BookConditionDto> updateBookCondition(@PathVariable("id") Long bookConditionId, @RequestBody @Valid BookConditionDto bookConditionDto)
     {
         BookConditionDto updatedBookCondition = bookConditionService.updateBookCondition(bookConditionId, bookConditionDto);
 

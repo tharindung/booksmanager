@@ -1,6 +1,7 @@
 package com.mybookscollection.BooksManager.dto;
 
 import com.mybookscollection.BooksManager.entity.Book;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,9 @@ import java.util.Set;
 public class BookCategoryDto {
 
     private Long bookCategoryId;
+
+    @NotEmpty(message = "Book Category should not be empty !")
     private String bookCategory;
+
     private Set<Book> books = new HashSet<>();
 }

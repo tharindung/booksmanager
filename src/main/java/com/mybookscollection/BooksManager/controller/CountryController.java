@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.controller;
 
 import com.mybookscollection.BooksManager.dto.CountryDto;
 import com.mybookscollection.BooksManager.service.CountryServie;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class CountryController {
     private CountryServie countryService;
 
     @PostMapping
-    public ResponseEntity<CountryDto> createCountry(@RequestBody CountryDto countryDto){
+    public ResponseEntity<CountryDto> createCountry(@RequestBody @Valid CountryDto countryDto){
 
         CountryDto savedCountry = countryService.createCountry(countryDto);
 
@@ -41,7 +42,7 @@ public class CountryController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CountryDto> updateCountry(@PathVariable("id") Long countryId, @RequestBody CountryDto countryDto)
+    public ResponseEntity<CountryDto> updateCountry(@PathVariable("id") Long countryId, @RequestBody @Valid CountryDto countryDto)
     {
         CountryDto updatedCountry = countryService.updateCountry(countryId, countryDto);
 

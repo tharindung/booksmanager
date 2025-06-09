@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.controller;
 
 import com.mybookscollection.BooksManager.dto.BookRequestDto;
 import com.mybookscollection.BooksManager.service.BookRequestService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class BookRequestController {
     private BookRequestService bookRequestService;
 
     @PostMapping
-    public ResponseEntity<BookRequestDto> createBookRequest(@RequestBody BookRequestDto bookRequestDto)
+    public ResponseEntity<BookRequestDto> createBookRequest(@RequestBody @Valid BookRequestDto bookRequestDto)
     {
         BookRequestDto savedBookRequest = bookRequestService.createBookRequest(bookRequestDto);
 
@@ -42,7 +43,7 @@ public class BookRequestController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<BookRequestDto> updateBookRequest(@PathVariable("id") Long bookRequestId, @RequestBody BookRequestDto bookRequestDto)
+    public ResponseEntity<BookRequestDto> updateBookRequest(@PathVariable("id") Long bookRequestId, @RequestBody @Valid BookRequestDto bookRequestDto)
     {
         BookRequestDto updatedBookRequest = bookRequestService.updateBookRequest(bookRequestId, bookRequestDto);
 

@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService{
         foundBook.setBookOwner(bookDto.getBookOwner());
         foundBook.setBookPurchaseDate(bookDto.getBookPurchaseDate());
         foundBook.setBookRequests(bookDto.getBookRequests());
-        foundBook.setBookShareable(bookDto.isBookShareable());
+        foundBook.setBookShareable(bookDto.getBookShareable());
 
         Book updatedBook = bookRepository.save(foundBook);
 

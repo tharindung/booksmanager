@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.controller;
 
 import com.mybookscollection.BooksManager.dto.RequestStatusDto;
 import com.mybookscollection.BooksManager.service.RequestStatusService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class RequestStatusController {
     private RequestStatusService requestStatusService;
 
     @PostMapping
-    public ResponseEntity<RequestStatusDto> createRequestStatus(@RequestBody RequestStatusDto requestStatusDto){
+    public ResponseEntity<RequestStatusDto> createRequestStatus(@RequestBody @Valid RequestStatusDto requestStatusDto){
 
         RequestStatusDto savedRequestStatus = requestStatusService.createRequestStatus(requestStatusDto);
 
@@ -41,7 +42,7 @@ public class RequestStatusController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<RequestStatusDto> updateRequestStatus(@PathVariable("id") Long requestStatusId, @RequestBody RequestStatusDto requestStatusDto)
+    public ResponseEntity<RequestStatusDto> updateRequestStatus(@PathVariable("id") Long requestStatusId, @RequestBody @Valid RequestStatusDto requestStatusDto)
     {
         RequestStatusDto updatedRequestStatus = requestStatusService.updateRequestStatus(requestStatusId, requestStatusDto);
 
