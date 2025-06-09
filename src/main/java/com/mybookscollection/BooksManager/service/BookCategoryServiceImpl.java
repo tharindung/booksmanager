@@ -41,15 +41,16 @@ public class BookCategoryServiceImpl implements BookCategoryService{
     @Override
     public BookCategoryDto getBookCategoryById(Long bookCategoryId) {
 
-        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
-
+        //BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
+        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category", "bookCategoryId", bookCategoryId));
         return modelMapper.map(foundBookCategory, BookCategoryDto.class);
     }
 
     @Override
     public BookCategoryDto updateBookCategory(Long bookCategoryId, BookCategoryDto bookCategoryDto) {
 
-        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
+        //BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
+        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category", "bookCategoryId", bookCategoryId));
 
         foundBookCategory.setBookCategory(bookCategoryDto.getBookCategory());
         foundBookCategory.setBooks(bookCategoryDto.getBooks());
@@ -62,7 +63,8 @@ public class BookCategoryServiceImpl implements BookCategoryService{
     @Override
     public void deleteBookCategory(Long bookCategoryId) {
 
-        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
+        //BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category with ID : "+bookCategoryId+" does not exist !"));
+        BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category", "bookCategoryId", bookCategoryId));
 
         bookCategoryRepository.deleteById(bookCategoryId);
     }

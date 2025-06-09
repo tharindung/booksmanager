@@ -40,7 +40,9 @@ public class BookConditionServiceImpl implements BookConditionService{
     @Override
     public BookConditionDto getBookConditionById(Long bookConditionId) {
 
-        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        //BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition", "bookConditionId", bookConditionId));
+
 
         return modelMapper.map(foundBookCondition, BookConditionDto.class);
     }
@@ -48,7 +50,8 @@ public class BookConditionServiceImpl implements BookConditionService{
     @Override
     public BookConditionDto updateBookCondition(Long bookConditionId, BookConditionDto bookConditionDto) {
 
-        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        //BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition", "bookConditionId", bookConditionId));
 
         foundBookCondition.setBookCondition(bookConditionDto.getBookCondition());
         foundBookCondition.setBooks(bookConditionDto.getBooks());
@@ -61,7 +64,8 @@ public class BookConditionServiceImpl implements BookConditionService{
     @Override
     public void deleteBookCondition(Long bookConditionId) {
 
-        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        //BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
+        BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition", "bookConditionId", bookConditionId));
 
         bookConditionRepository.deleteById(bookConditionId);
 

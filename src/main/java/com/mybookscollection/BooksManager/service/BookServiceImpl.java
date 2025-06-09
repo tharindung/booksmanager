@@ -41,7 +41,8 @@ public class BookServiceImpl implements BookService{
     @Override
     public BookDto getBookById(Long bookId) {
 
-        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        //Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book", "bookId", bookId));
 
         return modelMapper.map(foundBook, BookDto.class);
     }
@@ -49,7 +50,8 @@ public class BookServiceImpl implements BookService{
     @Override
     public BookDto updateBook(Long bookId, BookDto bookDto) {
 
-        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        //Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book", "bookId", bookId));
 
         foundBook.setBookName(bookDto.getBookName());
         foundBook.setBookAuthor(bookDto.getBookAuthor());
@@ -71,7 +73,8 @@ public class BookServiceImpl implements BookService{
     @Override
     public void deleteBook(Long bookId) {
 
-        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        //Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book with ID : " + bookId + " does not exist !"));
+        Book foundBook = bookRepository.findById(bookId).orElseThrow(()->new ResourceNotFoundException("Book", "bookId", bookId));
 
         bookRepository.deleteById(bookId);
 

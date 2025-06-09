@@ -40,7 +40,8 @@ public class RequestStatusServiceImpl implements RequestStatusService{
     @Override
     public RequestStatusDto getRequestStatusById(Long requestStatusId) {
 
-        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        //RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status", "requestStatusId", requestStatusId));
 
         return modelMapper.map(foundRequestStatus, RequestStatusDto.class);
     }
@@ -48,7 +49,8 @@ public class RequestStatusServiceImpl implements RequestStatusService{
     @Override
     public RequestStatusDto updateRequestStatus(Long requestStatusId, RequestStatusDto requestStatusDto) {
 
-        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        //RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status", "requestStatusId", requestStatusId));
 
         foundRequestStatus.setRequestStatus(requestStatusDto.getRequestStatus());
         foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests());
@@ -61,7 +63,8 @@ public class RequestStatusServiceImpl implements RequestStatusService{
     @Override
     public void deleteRequestStatus(Long requestStatusId) {
 
-        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        //RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status with ID : " + requestStatusId + " does not exist !"));
+        RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status", "requestStatusId", requestStatusId));
 
         requestStatusRepository.deleteById(requestStatusId);
 

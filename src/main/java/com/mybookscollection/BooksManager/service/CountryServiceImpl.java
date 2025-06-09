@@ -40,7 +40,8 @@ public class CountryServiceImpl implements CountryServie{
     @Override
     public CountryDto getCountryById(Long countryId) {
 
-        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country with ID : "+countryId+" does not exist !"));
+        //Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country with ID : "+countryId+" does not exist !"));
+        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country", "countryId", countryId));
 
         return modelMapper.map(foundCountry, CountryDto.class);
     }
@@ -48,7 +49,8 @@ public class CountryServiceImpl implements CountryServie{
     @Override
     public CountryDto updateCountry(Long countryId, CountryDto countryDto) {
 
-        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException(("Country with ID : "+countryId+" does not exist !")));
+        //Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException(("Country with ID : "+countryId+" does not exist !")));
+        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country", "countryId", countryId));
 
         foundCountry.setCountry(countryDto.getCountry());
         foundCountry.setUsers(countryDto.getUsers());
@@ -61,7 +63,8 @@ public class CountryServiceImpl implements CountryServie{
     @Override
     public void deleteCountry(Long countryId) {
 
-        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country with ID : "+countryId+" does not exist !"));
+        //Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country with ID : "+countryId+" does not exist !"));
+        Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country", "countryId", countryId));
 
         countryRepository.deleteById(countryId);
 

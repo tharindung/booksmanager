@@ -41,7 +41,8 @@ public class BookRequestServiceImpl implements BookRequestService{
     @Override
     public BookRequestDto getBookRequestById(Long bookRequestId) {
 
-        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book request with ID : " + bookRequestId + " does not exist !"));
+        //BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book request with ID : " + bookRequestId + " does not exist !"));
+        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book request", "bookRequestId", bookRequestId));
 
         return modelMapper.map(foundBookRequest, BookRequestDto.class);
     }
@@ -49,7 +50,8 @@ public class BookRequestServiceImpl implements BookRequestService{
     @Override
     public BookRequestDto updateBookRequest(Long bookRequestId, BookRequestDto bookRequestDto) {
 
-        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
+        //BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
+        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request", "bookRequestId", bookRequestId));
 
         foundBookRequest.setBook(bookRequestDto.getBook());
         foundBookRequest.setRequestedUser(bookRequestDto.getRequestedUser());
@@ -63,7 +65,8 @@ public class BookRequestServiceImpl implements BookRequestService{
     @Override
     public void deleteBookRequest(Long bookRequestId) {
 
-        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
+        //BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
+        BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request", "bookRequestId", bookRequestId));
 
         bookRequestRepository.deleteById(bookRequestId);
     }

@@ -40,7 +40,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto getUserById(Long userId) {
 
-        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
 
         return modelMapper.map(foundUser, UserDto.class);
     }
@@ -48,7 +49,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto updateUser(Long userId, UserDto userDto) {
 
-        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
 
         foundUser.setUserName(userDto.getUserName());
         foundUser.setUserEmail(userDto.getUserEmail());
@@ -66,7 +68,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(Long userId) {
 
-        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
 
         userRepository.deleteById(userId);
     }
