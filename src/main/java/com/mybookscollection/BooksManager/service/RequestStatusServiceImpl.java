@@ -1,6 +1,7 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.RequestStatusDto;
+import com.mybookscollection.BooksManager.entity.BookRequest;
 import com.mybookscollection.BooksManager.entity.RequestStatus;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.RequestStatusRepository;
@@ -53,7 +54,8 @@ public class RequestStatusServiceImpl implements RequestStatusService{
         RequestStatus foundRequestStatus = requestStatusRepository.findById(requestStatusId).orElseThrow(()->new ResourceNotFoundException("Request Status", "requestStatusId", requestStatusId));
 
         foundRequestStatus.setRequestStatus(requestStatusDto.getRequestStatus());
-        foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests());
+        //foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests());
+        foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
 
         RequestStatus updatedRequestStatus = requestStatusRepository.save(foundRequestStatus);
 

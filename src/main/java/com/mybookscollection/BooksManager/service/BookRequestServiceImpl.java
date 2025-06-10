@@ -1,7 +1,10 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.BookRequestDto;
+import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookRequest;
+import com.mybookscollection.BooksManager.entity.RequestStatus;
+import com.mybookscollection.BooksManager.entity.User;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.BookRequestRepository;
 import jakarta.annotation.Resource;
@@ -53,9 +56,12 @@ public class BookRequestServiceImpl implements BookRequestService{
         //BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
         BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request", "bookRequestId", bookRequestId));
 
-        foundBookRequest.setBook(bookRequestDto.getBook());
-        foundBookRequest.setRequestedUser(bookRequestDto.getRequestedUser());
-        foundBookRequest.setRequestStatus(bookRequestDto.getRequestStatus());
+        //foundBookRequest.setBook(bookRequestDto.getBook());
+        foundBookRequest.setBook(modelMapper.map(bookRequestDto.getBook(), Book.class));
+        //foundBookRequest.setRequestedUser(bookRequestDto.getRequestedUser());
+        foundBookRequest.setRequestedUser(modelMapper.map(bookRequestDto.getRequestedUser(), User.class));
+        //foundBookRequest.setRequestStatus(bookRequestDto.getRequestStatus());
+        foundBookRequest.setRequestStatus(modelMapper.map(bookRequestDto.getRequestStatus(), RequestStatus.class));
 
         BookRequest updatedBookRequest = bookRequestRepository.save(foundBookRequest);
 

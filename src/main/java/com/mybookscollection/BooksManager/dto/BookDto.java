@@ -1,5 +1,9 @@
 package com.mybookscollection.BooksManager.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.mybookscollection.BooksManager.entity.BookCategory;
 import com.mybookscollection.BooksManager.entity.BookCondition;
 import com.mybookscollection.BooksManager.entity.BookRequest;
@@ -12,13 +16,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "bookId")
 public class BookDto {
 
     private Long bookId;
@@ -34,10 +41,14 @@ public class BookDto {
     private LocalDate bookPurchaseDate;
 
     @NotNull(message = "Book Category is required !")
-    private BookCategory bookCategory;
+    //private BookCategory bookCategory;
+    @JsonManagedReference(value="bookCategory")
+    private BookCategoryDto bookCategory;
 
     @NotNull(message = "Book Condition is required !")
-    private BookCondition bookCondition;
+    //private BookCondition bookCondition;
+    @JsonManagedReference(value="bookCondition")
+    private BookConditionDto bookCondition;
 
     private String bookCatalogNo;
 
@@ -47,8 +58,17 @@ public class BookDto {
     //private boolean isBookShareable;
     private Boolean bookShareable;
 
-    @NotNull(message = "Book Owner is required !")
-    private User bookOwner;
+    /* Initial way of using 'User' entity */
+    //private User bookOwner;
 
-    private Set<BookRequest> bookRequests = new HashSet<>();
+    /* Alternative way of using 'UserDto' entity - Due to '@JsonBackReference', this will make 'bookOwner' fieled unavailable in JSON payload for BookDto but 'books' fieled available in JSON payload for 'UserDto' */
+    //@JsonBackReference(value="bookOwner")
+    /* Alternative way of using 'BookDto' entity with @JsonIdentityInfo annotation - this will make both 'bookOwner' field in JSON payload for BookDto as well as 'books' fieled in JSON payload for 'UserDto' available */
+    @NotNull(message = "Book Owner is required !")
+    private UserDto bookOwner;
+
+    //private Set<BookRequest> bookRequests = new HashSet<>();
+    @JsonBackReference(value="reqBook")
+    private Set<BookRequestDto> bookRequests = new HashSet<>();
+
 }

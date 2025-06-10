@@ -1,7 +1,7 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.BookDto;
-import com.mybookscollection.BooksManager.entity.Book;
+import com.mybookscollection.BooksManager.entity.*;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.BookRepository;
 import jakarta.annotation.Resource;
@@ -56,13 +56,17 @@ public class BookServiceImpl implements BookService{
         foundBook.setBookName(bookDto.getBookName());
         foundBook.setBookAuthor(bookDto.getBookAuthor());
         foundBook.setBookCatalogNo(bookDto.getBookCatalogNo());
-        foundBook.setBookCategory(bookDto.getBookCategory());
-        foundBook.setBookCondition(bookDto.getBookCondition());
+        //foundBook.setBookCategory(bookDto.getBookCategory());
+        foundBook.setBookCategory(modelMapper.map(bookDto.getBookCategory(), BookCategory.class));
+        //foundBook.setBookCondition(bookDto.getBookCondition());
+        foundBook.setBookCondition(modelMapper.map(bookDto.getBookCondition(), BookCondition.class));
         foundBook.setBookImg(bookDto.getBookImg());
         foundBook.setBookNotes(bookDto.getBookNotes());
-        foundBook.setBookOwner(bookDto.getBookOwner());
+        //foundBook.setBookOwner(bookDto.getBookOwner());
+        foundBook.setBookOwner(modelMapper.map(bookDto.getBookOwner(), User.class));
         foundBook.setBookPurchaseDate(bookDto.getBookPurchaseDate());
-        foundBook.setBookRequests(bookDto.getBookRequests());
+        //foundBook.setBookRequests(bookDto.getBookRequests());
+        foundBook.setBookRequests(bookDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
         foundBook.setBookShareable(bookDto.getBookShareable());
 
         Book updatedBook = bookRepository.save(foundBook);

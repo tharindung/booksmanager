@@ -1,6 +1,9 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.UserDto;
+import com.mybookscollection.BooksManager.entity.Book;
+import com.mybookscollection.BooksManager.entity.BookRequest;
+import com.mybookscollection.BooksManager.entity.Country;
 import com.mybookscollection.BooksManager.entity.User;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.UserRepository;
@@ -55,10 +58,13 @@ public class UserServiceImpl implements UserService{
         foundUser.setUserName(userDto.getUserName());
         foundUser.setUserEmail(userDto.getUserEmail());
         foundUser.setUserPassword(userDto.getUserPassword());
-        foundUser.setUserCountry(userDto.getUserCountry());
+        //foundUser.setUserCountry(userDto.getUserCountry());
+        foundUser.setUserCountry(modelMapper.map(userDto.getUserCountry(), Country.class));
         foundUser.setUserJoinedDate(userDto.getUserJoinedDate());
-        foundUser.setBooks(userDto.getBooks());
-        foundUser.setBookRequests(userDto.getBookRequests());
+        //foundUser.setBooks(userDto.getBooks());
+        foundUser.setBooks(userDto.getBooks().stream().map(b->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        //foundUser.setBookRequests(userDto.getBookRequests());
+        foundUser.setBookRequests(userDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
 
         User updatedUser = userRepository.save(foundUser);
 

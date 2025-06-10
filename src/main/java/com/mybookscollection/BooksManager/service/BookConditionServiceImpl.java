@@ -1,6 +1,7 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.BookConditionDto;
+import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookCondition;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.BookConditionRepository;
@@ -43,7 +44,6 @@ public class BookConditionServiceImpl implements BookConditionService{
         //BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition with ID : "+bookConditionId+" does not exist !"));
         BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition", "bookConditionId", bookConditionId));
 
-
         return modelMapper.map(foundBookCondition, BookConditionDto.class);
     }
 
@@ -54,7 +54,8 @@ public class BookConditionServiceImpl implements BookConditionService{
         BookCondition foundBookCondition = bookConditionRepository.findById(bookConditionId).orElseThrow(()->new ResourceNotFoundException("Book Condition", "bookConditionId", bookConditionId));
 
         foundBookCondition.setBookCondition(bookConditionDto.getBookCondition());
-        foundBookCondition.setBooks(bookConditionDto.getBooks());
+        //foundBookCondition.setBooks(bookConditionDto.getBooks());
+        foundBookCondition.setBooks(bookConditionDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
 
         BookCondition updatedBookCondition = bookConditionRepository.save(foundBookCondition);
 

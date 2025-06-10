@@ -1,5 +1,6 @@
 package com.mybookscollection.BooksManager.dto;
 
+import com.fasterxml.jackson.annotation.*;
 import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookRequest;
 import com.mybookscollection.BooksManager.entity.Country;
@@ -11,15 +12,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userId")
+public class UserDto{
 
     private Long userId;
 
@@ -27,7 +32,9 @@ public class UserDto {
     private String userName;
 
     @NotNull(message = "Country is required !")
-    private Country userCountry;
+    //private Country userCountry;
+    @JsonManagedReference(value="userCountry")
+    private CountryDto userCountry;
 
     @Email(message = "Email should be valid !")
     @NotEmpty(message = "Email should not be empty !")
@@ -39,7 +46,17 @@ public class UserDto {
     @NotNull(message = "User Joined Date is required !")
     private LocalDate userJoinedDate;
 
-    private Set<Book> books = new HashSet<>();
+    /* Initial way of using 'book' entity */
+    //private Set<Book> books = new HashSet<>();
 
-    private Set<BookRequest> bookRequests = new HashSet<>();
+    /* Alternative way of using 'BookDto' entity - but this will make 'books' fieled available in JSON payload for 'UserDto' but 'bookOwner' fieled unavailable in JSON payload for BookDto */
+    //@JsonManagedReference(value="bookOwner")
+    //private Set<BookDto> books = new HashSet<>();
+
+    /* Alternative way of using 'BookDto' entity with @JsonIdentityInfo annotation - this will make both 'books' fieled in JSON payload for 'UserDto' as well as'bookOwner' fieled in JSON payload for BookDto available */
+    private Set<BookDto> books = new HashSet<>();
+
+    //private Set<BookRequest> bookRequests = new HashSet<>();
+    @JsonBackReference(value="reqUser")
+    private Set<BookRequestDto> bookRequests = new HashSet<>();
 }

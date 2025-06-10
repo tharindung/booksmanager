@@ -1,5 +1,7 @@
 package com.mybookscollection.BooksManager.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mybookscollection.BooksManager.entity.Book;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -21,5 +23,7 @@ public class BookCategoryDto {
     @NotEmpty(message = "Book Category should not be empty !")
     private String bookCategory;
 
-    private Set<Book> books = new HashSet<>();
+    //private Set<Book> books = new HashSet<>();
+    @JsonBackReference(value="bookCategory")
+    private Set<BookDto> books = new HashSet<>();
 }

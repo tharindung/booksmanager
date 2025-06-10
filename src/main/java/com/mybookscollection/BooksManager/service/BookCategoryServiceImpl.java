@@ -1,6 +1,7 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.BookCategoryDto;
+import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookCategory;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.BookCategoryRepository;
@@ -53,7 +54,8 @@ public class BookCategoryServiceImpl implements BookCategoryService{
         BookCategory foundBookCategory = bookCategoryRepository.findById(bookCategoryId).orElseThrow(()->new ResourceNotFoundException("Book Category", "bookCategoryId", bookCategoryId));
 
         foundBookCategory.setBookCategory(bookCategoryDto.getBookCategory());
-        foundBookCategory.setBooks(bookCategoryDto.getBooks());
+        //foundBookCategory.setBooks(bookCategoryDto.getBooks());
+        foundBookCategory.setBooks(bookCategoryDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
 
         BookCategory updatedBookCategory = bookCategoryRepository.save(foundBookCategory);
 

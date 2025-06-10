@@ -2,6 +2,7 @@ package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.CountryDto;
 import com.mybookscollection.BooksManager.entity.Country;
+import com.mybookscollection.BooksManager.entity.User;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.CountryRepository;
 import lombok.AllArgsConstructor;
@@ -53,7 +54,8 @@ public class CountryServiceImpl implements CountryServie{
         Country foundCountry = countryRepository.findById(countryId).orElseThrow(()->new ResourceNotFoundException("Country", "countryId", countryId));
 
         foundCountry.setCountry(countryDto.getCountry());
-        foundCountry.setUsers(countryDto.getUsers());
+        //foundCountry.setUsers(countryDto.getUsers());
+        foundCountry.setUsers(countryDto.getUsers().stream().map(u->modelMapper.map(u, User.class)).collect(Collectors.toSet()));
 
         Country updatedCountry = countryRepository.save(foundCountry);
 
