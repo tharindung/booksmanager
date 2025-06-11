@@ -1,7 +1,6 @@
 package com.mybookscollection.BooksManager.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.mybookscollection.BooksManager.entity.BookRequest;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -18,6 +17,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "requestStatusId")
 public class RequestStatusDto {
 
     private Long requestStatusId;
@@ -25,7 +25,7 @@ public class RequestStatusDto {
     @NotEmpty(message = "Request Status should not be empty !")
     private String requestStatus;
 
-    //private Set<BookRequest> bookRequests = new HashSet<>();
-    @JsonBackReference(value="reqStatus")
+    //@JsonBackReference(value="reqStatus")
+    @JsonIgnore//To reduce the complexity of the Json payload we can ignore this
     private Set<BookRequestDto> bookRequests = new HashSet<>();
 }

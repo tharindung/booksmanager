@@ -1,5 +1,6 @@
 package com.mybookscollection.BooksManager.service;
 
+import com.mybookscollection.BooksManager.dto.UserDisplayDto;
 import com.mybookscollection.BooksManager.dto.UserDto;
 import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookRequest;
@@ -23,34 +24,49 @@ public class UserServiceImpl implements UserService{
     private ModelMapper modelMapper;
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    //public UserDto createUser(UserDto userDto) {
+    public UserDisplayDto createUser(UserDto userDto) { /* Using 'UserDisplayDto' instead of 'UserDto' to mask sensitive information */
 
         User newUser = modelMapper.map(userDto, User.class);
 
         User savedUser = userRepository.save(newUser);
 
-        return modelMapper.map(savedUser, UserDto.class);
+        //return modelMapper.map(savedUser, UserDto.class);
+        return modelMapper.map(savedUser, UserDisplayDto.class);
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    //public List<UserDto> getAllUsers() {
+    public List<UserDisplayDto> getAllUsers() { /* Using 'UserDisplayDto' instead of 'UserDto' to mask sensitive information */
 
         List<User> allUsers = userRepository.findAll();
 
-        return allUsers.stream().map((u)->modelMapper.map(u, UserDto.class)).collect(Collectors.toList());
+        //return allUsers.stream().map((u)->modelMapper.map(u, UserDto.class)).collect(Collectors.toList());
+        return allUsers.stream().map((u)->modelMapper.map(u, UserDisplayDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public UserDto getUserById(Long userId) {
+    public UserDto getUserDtoById(Long userId) { /* This method is required to return a 'UserDto' object by ID */
 
-        //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
         User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
 
         return modelMapper.map(foundUser, UserDto.class);
     }
 
     @Override
-    public UserDto updateUser(Long userId, UserDto userDto) {
+    //public UserDto getUserById(Long userId) {
+    public UserDisplayDto getUserById(Long userId) { /* Using 'UserDisplayDto' instead of 'UserDto' to mask sensitive information */
+
+        //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
+        User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
+
+        //return modelMapper.map(foundUser, UserDto.class);
+        return modelMapper.map(foundUser, UserDisplayDto.class);
+    }
+
+    @Override
+    //public UserDto updateUser(Long userId, UserDto userDto) {
+    public UserDisplayDto updateUser(Long userId, UserDto userDto) { /* Using 'UserDisplayDto' instead of 'UserDto' to mask sensitive information */
 
         //User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User with ID : " + userId + " does not exist !"));
         User foundUser = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User", "userId", userId));
@@ -68,7 +84,8 @@ public class UserServiceImpl implements UserService{
 
         User updatedUser = userRepository.save(foundUser);
 
-        return modelMapper.map(updatedUser, UserDto.class);
+        //return modelMapper.map(updatedUser, UserDto.class);
+        return modelMapper.map(updatedUser, UserDisplayDto.class);
     }
 
     @Override

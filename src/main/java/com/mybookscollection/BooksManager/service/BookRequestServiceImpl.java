@@ -1,6 +1,8 @@
 package com.mybookscollection.BooksManager.service;
 
+import com.mybookscollection.BooksManager.dto.BookDto;
 import com.mybookscollection.BooksManager.dto.BookRequestDto;
+import com.mybookscollection.BooksManager.dto.UserDto;
 import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.BookRequest;
 import com.mybookscollection.BooksManager.entity.RequestStatus;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class BookRequestServiceImpl implements BookRequestService{
 
+    private UserService userService;//This is needed to get the relevant 'UserDto' object when updating the 'BookRequestDto'
     private BookRequestRepository bookRequestRepository;
 
     private ModelMapper modelMapper;
@@ -56,10 +59,17 @@ public class BookRequestServiceImpl implements BookRequestService{
         //BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request with ID : " + bookRequestId + " does not exist !"));
         BookRequest foundBookRequest = bookRequestRepository.findById(bookRequestId).orElseThrow(()->new ResourceNotFoundException("Book Request", "bookRequestId", bookRequestId));
 
+        UserDto requestedUserDto = userService.getUserDtoById(bookRequestDto.getRequestedUser().getUserId()); //Getting UserDto object for the 'requested user'
+        UserDto bookOwner = userService.getUserDtoById(bookRequestDto.getBook().getBookOwner().getUserId()); //Getting UserDto object for the 'book owner'
+        Book updatedBook = modelMapper.map(bookRequestDto.getBook(), Book.class); //Get the Book entity from BookDto object for the updated book
+        updatedBook.setBookOwner(modelMapper.map(bookOwner, User.class)); //Set the 'book owner' for the Book entity
+
         //foundBookRequest.setBook(bookRequestDto.getBook());
-        foundBookRequest.setBook(modelMapper.map(bookRequestDto.getBook(), Book.class));
+        foundBookRequest.setBook(updatedBook);
         //foundBookRequest.setRequestedUser(bookRequestDto.getRequestedUser());
-        foundBookRequest.setRequestedUser(modelMapper.map(bookRequestDto.getRequestedUser(), User.class));
+        //foundBookRequest.setRequestedUser(modelMapper.map(bookRequestDto.getRequestedUser(), User.class));
+
+        foundBookRequest.setRequestedUser(modelMapper.map(requestedUserDto, User.class));
         //foundBookRequest.setRequestStatus(bookRequestDto.getRequestStatus());
         foundBookRequest.setRequestStatus(modelMapper.map(bookRequestDto.getRequestStatus(), RequestStatus.class));
 

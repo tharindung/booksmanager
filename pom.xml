@@ -64,6 +64,11 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 			<version>3.5.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.zalando</groupId>
+			<artifactId>problem-spring-web-starter</artifactId>
+			<version>0.28.0-RC.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

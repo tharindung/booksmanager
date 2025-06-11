@@ -1,7 +1,6 @@
 package com.mybookscollection.BooksManager.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.mybookscollection.BooksManager.entity.User;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -17,6 +16,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "countryId")
 public class CountryDto{
 
     private Long countryId;
@@ -24,8 +24,11 @@ public class CountryDto{
     @NotEmpty(message = "Country should not be empty !")
     private String country;
 
-    //private Set<User> users = new HashSet<>();
-    @JsonBackReference(value="userCountry")
-    private Set<UserDto> users = new HashSet<>();
+    //@JsonBackReference(value="userCountry")
+    //private Set<UserDto> users = new HashSet<>();
 
+    /* Using 'UserDisplayDto' instead of 'UserDto' to mask sensitive information - Anyway due to the annotation '@JsonBackReference' user details are not going to display in 'country' payload */
+    //@JsonBackReference(value="userCountry")
+    @JsonIgnore //To reduce the complexity of the Json payload we can ignore this
+    private Set<UserDisplayDto> users = new HashSet<>();
 }

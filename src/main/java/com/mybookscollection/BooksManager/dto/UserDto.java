@@ -32,8 +32,7 @@ public class UserDto{
     private String userName;
 
     @NotNull(message = "Country is required !")
-    //private Country userCountry;
-    @JsonManagedReference(value="userCountry")
+    //@JsonManagedReference(value="userCountry")
     private CountryDto userCountry;
 
     @Email(message = "Email should be valid !")
@@ -56,7 +55,7 @@ public class UserDto{
     /* Alternative way of using 'BookDto' entity with @JsonIdentityInfo annotation - this will make both 'books' fieled in JSON payload for 'UserDto' as well as'bookOwner' fieled in JSON payload for BookDto available */
     private Set<BookDto> books = new HashSet<>();
 
-    //private Set<BookRequest> bookRequests = new HashSet<>();
-    @JsonBackReference(value="reqUser")
+    //@JsonBackReference(value="reqUser")
+    @JsonIgnore
     private Set<BookRequestDto> bookRequests = new HashSet<>();
 }

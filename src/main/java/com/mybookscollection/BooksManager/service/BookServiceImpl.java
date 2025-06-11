@@ -1,6 +1,7 @@
 package com.mybookscollection.BooksManager.service;
 
 import com.mybookscollection.BooksManager.dto.BookDto;
+import com.mybookscollection.BooksManager.dto.UserDto;
 import com.mybookscollection.BooksManager.entity.*;
 import com.mybookscollection.BooksManager.exception.ResourceNotFoundException;
 import com.mybookscollection.BooksManager.repository.BookRepository;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class BookServiceImpl implements BookService{
 
+    private UserService userService;//This is needed to get the relevant 'UserDto' object when updating the 'BookDto'
     private BookRepository bookRepository;
 
     private ModelMapper modelMapper;
@@ -63,7 +65,8 @@ public class BookServiceImpl implements BookService{
         foundBook.setBookImg(bookDto.getBookImg());
         foundBook.setBookNotes(bookDto.getBookNotes());
         //foundBook.setBookOwner(bookDto.getBookOwner());
-        foundBook.setBookOwner(modelMapper.map(bookDto.getBookOwner(), User.class));
+        UserDto bookOwnerDto = userService.getUserDtoById(bookDto.getBookOwner().getUserId());
+        foundBook.setBookOwner(modelMapper.map(bookOwnerDto, User.class));
         foundBook.setBookPurchaseDate(bookDto.getBookPurchaseDate());
         //foundBook.setBookRequests(bookDto.getBookRequests());
         foundBook.setBookRequests(bookDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));

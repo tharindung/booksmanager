@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
@@ -64,4 +68,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    /*public ResponseEntity<Problem> handleAllExceptions(Exception ex, WebRequest request) {
+        return ResponseEntity.of(
+                Optional.of(
+                        Problem.builder()
+                                .withType(URI.create("https://foobar.com/problem-definitions/blah"))
+                                .withTitle("Bad Request")
+                                .withDetail(ex.getMessage())
+                                .withStatus(Status.BAD_REQUEST)
+                                .build()
+                ));
+    }*/
 }
