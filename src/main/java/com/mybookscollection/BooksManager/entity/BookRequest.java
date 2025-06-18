@@ -1,15 +1,13 @@
 package com.mybookscollection.BooksManager.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder // This annotation is needed for unit testing
 @Entity
 @Table(name = "book_request")
 public class BookRequest {

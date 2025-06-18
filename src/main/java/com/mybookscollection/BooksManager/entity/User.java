@@ -3,10 +3,7 @@ package com.mybookscollection.BooksManager.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -16,8 +13,9 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder //This annotation is needed for unit testing
 @Entity
-@Table(name = "user")
+@Table(name = "book_user") //Changed table name from 'user' to 'book_user' as repository layer unit tests were causing errors because probably H2 in-memory db has 'user' as a keyword
 public class User {
 
     @Id
