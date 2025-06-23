@@ -55,7 +55,15 @@ public class RequestStatusServiceImpl implements RequestStatusService{
 
         foundRequestStatus.setRequestStatus(requestStatusDto.getRequestStatus());
         //foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests());
-        foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+        /* Before access 'stream()' method we need to make sure bookRequests set is not null  */
+        if(requestStatusDto.getBookRequests() != null)
+        {
+            foundRequestStatus.setBookRequests(requestStatusDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundRequestStatus.setBookRequests(null);
+        }
 
         RequestStatus updatedRequestStatus = requestStatusRepository.save(foundRequestStatus);
 

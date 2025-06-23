@@ -78,9 +78,28 @@ public class UserServiceImpl implements UserService{
         foundUser.setUserCountry(modelMapper.map(userDto.getUserCountry(), Country.class));
         foundUser.setUserJoinedDate(userDto.getUserJoinedDate());
         //foundUser.setBooks(userDto.getBooks());
-        foundUser.setBooks(userDto.getBooks().stream().map(b->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+
+        /* Before access 'stream()' method we need to make sure books set is not null  */
+        if(userDto.getBooks() != null)
+        {
+            foundUser.setBooks(userDto.getBooks().stream().map(b->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundUser.setBooks(null);
+        }
+
         //foundUser.setBookRequests(userDto.getBookRequests());
-        foundUser.setBookRequests(userDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+
+        /* Before access 'stream()' method we need to make sure bookRequests set is not null  */
+        if(userDto.getBookRequests() != null)
+        {
+            foundUser.setBookRequests(userDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundUser.setBookRequests(null);
+        }
 
         User updatedUser = userRepository.save(foundUser);
 

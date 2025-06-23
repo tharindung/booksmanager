@@ -55,8 +55,13 @@ public class CountryServiceImpl implements CountryServie{
 
         foundCountry.setCountry(countryDto.getCountry());
         //foundCountry.setUsers(countryDto.getUsers());
-        foundCountry.setUsers(countryDto.getUsers().stream().map(u->modelMapper.map(u, User.class)).collect(Collectors.toSet()));
-
+        /* Before access 'stream()' method we need to make sure users set is not null  */
+        if(countryDto.getUsers() != null) {
+            foundCountry.setUsers(countryDto.getUsers().stream().map(u -> modelMapper.map(u, User.class)).collect(Collectors.toSet()));
+        }
+        else{
+            foundCountry.setUsers(null);
+        }
         Country updatedCountry = countryRepository.save(foundCountry);
 
         return modelMapper.map(updatedCountry, CountryDto.class);

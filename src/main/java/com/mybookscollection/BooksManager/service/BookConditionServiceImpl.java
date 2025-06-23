@@ -55,7 +55,15 @@ public class BookConditionServiceImpl implements BookConditionService{
 
         foundBookCondition.setBookCondition(bookConditionDto.getBookCondition());
         //foundBookCondition.setBooks(bookConditionDto.getBooks());
-        foundBookCondition.setBooks(bookConditionDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        /* Before access 'stream()' method we need to make sure books set is not null  */
+        if(bookConditionDto.getBooks() != null)
+        {
+            foundBookCondition.setBooks(bookConditionDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundBookCondition.setBooks(null);
+        }
 
         BookCondition updatedBookCondition = bookConditionRepository.save(foundBookCondition);
 

@@ -8,13 +8,11 @@ import com.mybookscollection.BooksManager.entity.Book;
 import com.mybookscollection.BooksManager.entity.RequestStatus;
 import com.mybookscollection.BooksManager.entity.User;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "bookRequestId")

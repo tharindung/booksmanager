@@ -69,7 +69,16 @@ public class BookServiceImpl implements BookService{
         foundBook.setBookOwner(modelMapper.map(bookOwnerDto, User.class));
         foundBook.setBookPurchaseDate(bookDto.getBookPurchaseDate());
         //foundBook.setBookRequests(bookDto.getBookRequests());
-        foundBook.setBookRequests(bookDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+
+        /* Before access 'stream()' method we need to make sure book request set is not null  */
+        if(bookDto.getBookRequests() != null)
+        {
+            foundBook.setBookRequests(bookDto.getBookRequests().stream().map(br->modelMapper.map(br, BookRequest.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundBook.setBookRequests(null);
+        }
         foundBook.setBookShareable(bookDto.getBookShareable());
 
         Book updatedBook = bookRepository.save(foundBook);

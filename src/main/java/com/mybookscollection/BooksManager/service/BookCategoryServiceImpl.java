@@ -55,7 +55,15 @@ public class BookCategoryServiceImpl implements BookCategoryService{
 
         foundBookCategory.setBookCategory(bookCategoryDto.getBookCategory());
         //foundBookCategory.setBooks(bookCategoryDto.getBooks());
-        foundBookCategory.setBooks(bookCategoryDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        /* Before access 'stream()' method we need to make sure books set is not null  */
+        if(bookCategoryDto.getBooks() != null)
+        {
+            foundBookCategory.setBooks(bookCategoryDto.getBooks().stream().map((b)->modelMapper.map(b, Book.class)).collect(Collectors.toSet()));
+        }
+        else
+        {
+            foundBookCategory.setBooks(null);
+        }
 
         BookCategory updatedBookCategory = bookCategoryRepository.save(foundBookCategory);
 

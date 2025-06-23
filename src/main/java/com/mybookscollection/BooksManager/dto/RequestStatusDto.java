@@ -3,10 +3,7 @@ package com.mybookscollection.BooksManager.dto;
 import com.fasterxml.jackson.annotation.*;
 import com.mybookscollection.BooksManager.entity.BookRequest;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "requestStatusId")
